@@ -14,10 +14,10 @@ then
     mkdir ${CLIENT}
     cd ${CLIENT}
     
-    #generate key
+    #Generate key
     openssl genrsa -out ${CLIENT}.key 2048
     
-    #generate csr
+    #Generate csr
     openssl req -new -key ${CLIENT}.key -subj "/CN=${CLIENT}/O=${GROUP}" -out ${CLIENT}.csr
     
     #CSR to base64
@@ -29,7 +29,7 @@ then
     #Create CSR object
     kubectl create -f ${CLIENT}_csr.yaml
    
-    #approve csr
+    #Approve CSR 
     kubectl certificate approve ${CLIENT}
     
     #extracting client certificate
@@ -38,7 +38,7 @@ then
     #CA extraction 
     kubectl config view --raw -o jsonpath='{..cluster.certificate-authority-data}' | base64 --decode > ca.crt
    
-    #Set env
+    #Set ENV
     export CA_CRT=$(cat ca.crt | base64 -w 0)
     export CONTEXT=$(kubectl config current-context)
     export CLUSTER_ENDPOINT=$(kubectl config view -o jsonpath='{.clusters[?(@.name=="'"$CONTEXT"'")].cluster.server}')
@@ -46,7 +46,7 @@ then
     export CRT=$(cat ${CLIENT}.crt | base64 -w 0)
     export KEY=$(cat ${CLIENT}.key | base64 -w 0)
     
-    #configure kubeconfig file
+    #Configure kubeconfig file
     curl https://raw.githubusercontent.com/shamimice03/Kubernetes_RBAC/main/kubeconfig-template.yaml | sed "s#<context>#${CONTEXT}# ;
     s#<cluster-name>#${CONTEXT}# ;
     s#<ca.crt>#${CA_CRT}# ;
