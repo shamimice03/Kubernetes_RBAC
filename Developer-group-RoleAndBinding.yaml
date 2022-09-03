@@ -25,7 +25,7 @@ metadata:
   namespace: production
 subjects:
 - kind: Group
-  name: Developer
+  name: developer
   apiGroup: rbac.authorization.k8s.io
 roleRef:
   kind: Role
