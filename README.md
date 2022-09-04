@@ -14,3 +14,5 @@ chmod +x generate_kubeconfig.sh
 ```
 bash generate_kubeconfig.sh
 ```
+
+
