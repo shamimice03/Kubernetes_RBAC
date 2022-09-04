@@ -12,9 +12,6 @@ rules:
 - apiGroups: ["apps"]
   resources: ["*"]
   verbs: ["*"]
-- apiGroups: ["rbac.authorization.k8s.io"]
-  resources: ["roles"]
-  verbs: ["get,list,watch"]
   
 ---
 
