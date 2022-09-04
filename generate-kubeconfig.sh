@@ -2,10 +2,13 @@
 
 read -p 'Enter the Username : ' name
 read -p 'Enter the Group Name : ' group
+read -p 'Enter the Namespace Name: ' namespace
 
 export CLIENT=$name
 export GROUP=$group
-echo -e "\nUsername is: ${CLIENT}\nGroup name is: ${GROUP}"
+export NAMESPACE=$namespace
+
+echo -e "\nUsername is: ${CLIENT}\nGroup Name is: ${GROUP}\nand Namespace is: ${NAMESPACE}"
 echo -e "\nIf you want to proceed with above informaton, type \"yes\" or \"no\": " 
 read value
 
@@ -45,6 +48,7 @@ then
     export USER=${CLIENT}
     export CRT=$(cat ${CLIENT}.crt | base64 -w 0)
     export KEY=$(cat ${CLIENT}.key | base64 -w 0)
+    export NAMESPACE=$namespace
     
     #Configure kubeconfig file
     curl https://raw.githubusercontent.com/shamimice03/Kubernetes_RBAC/main/kubeconfig-template.yaml | sed "s#<context>#${CONTEXT}# ;
@@ -52,6 +56,7 @@ then
     s#<ca.crt>#${CA_CRT}# ;
     s#<cluster-endpoint>#${CLUSTER_ENDPOINT}# ;
     s#<user-name>#${USER}# ;
+    s#<namespace>#${NAMESPACE}# ;
     s#<user.crt>#${CRT}# ; 
     s#<user.key>#${KEY}#" > config
 
