@@ -1,6 +1,7 @@
 # Give user and groups access to kubernetes cluster
 
-### Generate kubeconfig for a user using the script
+## Generate kubeconfig for a user using the script
+### Download the script
 ```
 curl https://raw.githubusercontent.com/shamimice03/Kubernetes_RBAC/main/generate-kubeconfig.sh > generate_kubeconfig.sh
 ```
